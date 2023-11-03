@@ -412,7 +412,7 @@ void LoadObjects()
 
 		StaticObjects[meshID].flags = (short)ReadInt16();
 
-		StaticObjects[meshID].shatterType = (short)ReadInt16();
+		StaticObjects[meshID].shatterType = (ShatterType)ReadInt16();
 		StaticObjects[meshID].shatterSound = (short)ReadInt16();
 	}
 
@@ -1001,9 +1001,8 @@ void LoadEventSets()
 		eventSet.Name = ReadString();
 		eventSet.Activators = (VolumeActivatorFlags)ReadInt32();
 
-		LoadEvent(eventSet.OnEnter);
-		LoadEvent(eventSet.OnInside);
-		LoadEvent(eventSet.OnLeave);
+		for (int eventType = 0; eventType < (int)VolumeEventType::Count; eventType++)
+			LoadEvent(eventSet.Events[eventType]);
 
 		g_Level.EventSets.push_back(eventSet);
 	}

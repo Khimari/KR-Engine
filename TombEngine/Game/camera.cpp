@@ -91,15 +91,13 @@ void DoThumbstickCamera()
 
 	if (Camera.laraNode == -1 && Camera.target.ToVector3i() == OldCam.target)
 	{
-		auto axisCoeff = Vector2(
-			AxisMap[InputAxis::CameraHorizontal],
-			AxisMap[InputAxis::CameraVertical]);
+		const auto& axisCoeff = AxisMap[(int)InputAxis::Camera];
 
-		if (abs(axisCoeff.x) > EPSILON)
-			Camera.targetElevation = ANGLE(-10.0f + (HORIZONTAL_CONSTRAINT_ANGLE * axisCoeff.x));
+		if (abs(axisCoeff.x) > EPSILON && abs(Camera.targetAngle) == 0)
+			Camera.targetAngle = ANGLE(VERTICAL_CONSTRAINT_ANGLE * axisCoeff.x);
 
-		if (abs(axisCoeff.y) > EPSILON && abs(Camera.targetAngle) == 0)
-			Camera.targetAngle = ANGLE(VERTICAL_CONSTRAINT_ANGLE * axisCoeff.y);
+		if (abs(axisCoeff.y) > EPSILON)
+			Camera.targetElevation = ANGLE(-10.0f + (HORIZONTAL_CONSTRAINT_ANGLE * axisCoeff.y));
 	}
 }
 

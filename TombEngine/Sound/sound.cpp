@@ -48,18 +48,15 @@ static int SecretSoundIndex = 5;
 static int GlobalMusicVolume;
 static int GlobalFXVolume;
 
-void SetVolumeMusic(int vol) 
+void SetVolumeTracks(int vol) 
 {
 	GlobalMusicVolume = vol;
 
 	float fVol = static_cast<float>(vol) / 100.0f;
-	if (BASS_ChannelIsActive(SoundtrackSlot[(int)SoundTrackType::BGM].Channel))
+	for (int i = 0; i < (int)SoundTrackType::Count; i++)
 	{
-		BASS_ChannelSetAttribute(SoundtrackSlot[(int)SoundTrackType::BGM].Channel, BASS_ATTRIB_VOL, fVol);
-	}
-	if (BASS_ChannelIsActive(SoundtrackSlot[(int)SoundTrackType::OneShot].Channel))
-	{
-		BASS_ChannelSetAttribute(SoundtrackSlot[(int)SoundTrackType::OneShot].Channel, BASS_ATTRIB_VOL, fVol);
+		if (BASS_ChannelIsActive(SoundtrackSlot[i].Channel))
+			BASS_ChannelSetAttribute(SoundtrackSlot[i].Channel, BASS_ATTRIB_VOL, fVol);
 	}
 }
 
@@ -634,11 +631,11 @@ void StopSoundTracks(bool excludeAmbience)
 {
 	for (int i = 0; i < (int)SoundTrackType::Count; i++)
 	{
-		auto mode = (SoundTrackType)i;
-		if (excludeAmbience && mode == SoundTrackType::BGM)
+		auto type = (SoundTrackType)i;
+		if (excludeAmbience && type == SoundTrackType::BGM)
 			continue;
 
-		StopSoundTrack((SoundTrackType)i, SOUND_XFADETIME_ONESHOT);
+		StopSoundTrack(type, SOUND_XFADETIME_ONESHOT);
 	}
 }
 
