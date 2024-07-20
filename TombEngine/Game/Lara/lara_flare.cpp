@@ -24,6 +24,17 @@ using namespace TEN::Math;
 
 constexpr auto FLARE_LIFE_MAX	 = 60.0f * FPS;
 constexpr auto FLARE_DEATH_DELAY = 1.0f  * FPS;
+constexpr auto START_DELAY = 0.25f * FPS;
+constexpr auto END_DELAY = 3.0f * FPS;
+constexpr auto INTENSITY_MAX = 1.0f;
+constexpr auto INTENSITY_MIN = 0.9f;
+constexpr auto CHAFF_SPAWN_CHANCE = 4 / 10.0f;
+constexpr auto CHAFF_SPAWN_ENDING_CHANCE = CHAFF_SPAWN_CHANCE / 2;
+constexpr auto CHAFF_SPAWN_DYING_CHANCE = CHAFF_SPAWN_CHANCE / 4;
+constexpr auto LIGHT_RADIUS = 9.0f;
+constexpr auto LIGHT_SPHERE_RADIUS = BLOCK(1 / 16.0f);
+constexpr auto LIGHT_POS_OFFSET = Vector3(0.0f, -BLOCK(1 / 8.0f), 0.0f);
+constexpr auto LIGHT_COLOR = Vector3(0.9f, 0.5f, 0.3f);
 
 void FlareControl(short itemNumber)
 {
@@ -420,18 +431,6 @@ void DoFlareInHand(ItemInfo& laraItem, int flareLife)
 
 bool DoFlareLight(const Vector3i& pos, int flareLife)
 {
-	constexpr auto START_DELAY				 = 0.25f * FPS;
-	constexpr auto END_DELAY				 = 3.0f  * FPS;
-	constexpr auto INTENSITY_MAX			 = 1.0f;
-	constexpr auto INTENSITY_MIN			 = 0.9f;
-	constexpr auto CHAFF_SPAWN_CHANCE		 = 4 / 10.0f;
-	constexpr auto CHAFF_SPAWN_ENDING_CHANCE = CHAFF_SPAWN_CHANCE / 2;
-	constexpr auto CHAFF_SPAWN_DYING_CHANCE	 = CHAFF_SPAWN_CHANCE / 4;
-	constexpr auto LIGHT_RADIUS				 = 9.0f;
-	constexpr auto LIGHT_SPHERE_RADIUS		 = BLOCK(1 / 16.0f);
-	constexpr auto LIGHT_POS_OFFSET			 = Vector3(0.0f, -BLOCK(1 / 8.0f), 0.0f);
-	constexpr auto LIGHT_COLOR				 = Vector3(0.9f, 0.5f, 0.3f);
-
 	if (flareLife >= FLARE_LIFE_MAX || flareLife == 0)
 		return false;
 
