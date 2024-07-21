@@ -389,3 +389,7 @@ constexpr char ScriptReserved_Vec3Cross[]			= "Cross";
 constexpr char ScriptReserved_Vec3Dot[]				= "Dot";
 constexpr char ScriptReserved_Vec3Distance[]		= "Distance";
 constexpr char ScriptReserved_Vec3Length[]			= "Length";
+
+// Equipment
+
+constexpr char ScriptReserved_SetMedHealth[] = "SetMedipackHealth";
